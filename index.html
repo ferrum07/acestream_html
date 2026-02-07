@@ -3,593 +3,499 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Canales Acestream</title>
+    <title>AceStream Sports - Lista de Canales</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: #0f1a2b;
-            color: #e0e0e0;
-            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #fff;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         header {
             text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
             margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #2a3c5a;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         }
-        
+
         h1 {
-            color: #3a7bd5;
-            font-size: 2.5rem;
+            font-size: 3em;
             margin-bottom: 10px;
+            background: linear-gradient(45deg, #00f260, #0575e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 242, 96, 0.3);
         }
-        
+
         .subtitle {
-            color: #6c8ab8;
-            font-size: 1.1rem;
+            color: #a0a0a0;
+            font-size: 1.2em;
         }
-        
-        .instructions {
-            background-color: #1a2a42;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            border-left: 4px solid #3a7bd5;
-        }
-        
-        .instructions h3 {
-            color: #4d8ef7;
-            margin-bottom: 10px;
-        }
-        
-        .instructions ul {
-            padding-left: 20px;
-        }
-        
-        .instructions li {
-            margin-bottom: 8px;
-        }
-        
-        .filter-controls {
+
+        .stats {
             display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 25px;
-            background-color: #1a2a42;
-            padding: 15px;
-            border-radius: 8px;
         }
-        
-        .search-box {
-            flex-grow: 1;
+
+        .stat-item {
+            text-align: center;
         }
-        
-        .search-box input {
-            width: 100%;
-            padding: 10px 15px;
-            border-radius: 6px;
-            border: 1px solid #2a3c5a;
-            background-color: #0f1a2b;
-            color: #e0e0e0;
-            font-size: 1rem;
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00f260;
         }
-        
-        .group-filter {
+
+        .stat-label {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .category-section {
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 242, 96, 0.3);
+        }
+
+        .category-flag {
+            font-size: 2em;
+            margin-right: 5px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        }
+
+        .category-title {
+            font-size: 1.5em;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
-        .group-filter select {
-            padding: 10px 15px;
-            border-radius: 6px;
-            border: 1px solid #2a3c5a;
-            background-color: #0f1a2b;
-            color: #e0e0e0;
-            font-size: 1rem;
+
+        .channel-count {
+            background: rgba(0, 242, 96, 0.2);
+            color: #00f260;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-left: auto;
         }
-        
-        .channels-container {
+
+        .channels-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 15px;
         }
-        
-        .channel-group {
-            background-color: #1a2a42;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .group-header {
-            background-color: #2a3c5a;
-            color: #4d8ef7;
-            padding: 15px;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        
-        .channel-list {
-            padding: 10px;
-        }
-        
-        .channel-item {
+
+        .channel-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 12px 10px;
-            border-bottom: 1px solid #2a3c5a;
-            transition: background-color 0.2s;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .channel-item:hover {
-            background-color: #223150;
-        }
-        
-        .channel-item:last-child {
-            border-bottom: none;
-        }
-        
-        .channel-info {
-            flex-grow: 1;
-        }
-        
-        .channel-name {
-            font-weight: 600;
-            color: #e0e0e0;
-        }
-        
-        .channel-id {
-            font-size: 0.85rem;
-            color: #8a9bba;
-            margin-top: 3px;
-        }
-        
-        .play-button {
-            background-color: #3a7bd5;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.2s;
-            white-space: nowrap;
-        }
-        
-        .play-button:hover {
-            background-color: #2c6ac7;
-        }
-        
-        .channel-count {
-            color: #6c8ab8;
-            font-size: 0.9rem;
-            margin-top: 5px;
-            text-align: center;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
+
+        .channel-card::before {
+            content: '';
+            position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
         }
-        
-        .modal-content {
-            background-color: #1a2a42;
-            border-radius: 10px;
-            padding: 25px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+
+        .channel-card:hover::before {
+            left: 100%;
         }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+
+        .channel-card:hover {
+            transform: translateY(-3px);
+            border-color: #00f260;
+            box-shadow: 0 10px 30px rgba(0, 242, 96, 0.2);
         }
-        
-        .modal-title {
-            color: #4d8ef7;
-            font-size: 1.3rem;
+
+        .channel-info {
+            flex: 1;
         }
-        
-        .close-modal {
-            background: none;
-            border: none;
-            color: #8a9bba;
-            font-size: 1.5rem;
-            cursor: pointer;
-            line-height: 1;
-        }
-        
-        .modal-body {
-            margin-bottom: 20px;
-        }
-        
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-        
-        .modal-button {
-            padding: 10px 20px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
+
+        .channel-name {
+            font-size: 1.1em;
             font-weight: 600;
+            margin-bottom: 5px;
+            color: #fff;
         }
-        
-        .primary-button {
-            background-color: #3a7bd5;
+
+        .channel-id {
+            font-size: 0.8em;
+            color: #666;
+            font-family: monospace;
+        }
+
+        .play-button {
+            background: linear-gradient(45deg, #00f260, #0575e6);
+            border: none;
             color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 242, 96, 0.4);
+            text-decoration: none;
         }
-        
-        .secondary-button {
-            background-color: #2a3c5a;
-            color: #e0e0e0;
+
+        .play-button:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(0, 242, 96, 0.6);
         }
-        
-        footer {
+
+        .play-button:active {
+            transform: scale(0.95);
+        }
+
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 15px solid white;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 3px;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #ff4444;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1em;
+            margin-bottom: 30px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: #00f260;
+            box-shadow: 0 0 20px rgba(0, 242, 96, 0.3);
+        }
+
+        .search-box::placeholder {
+            color: #666;
+        }
+
+        .no-results {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #2a3c5a;
-            color: #6c8ab8;
-            font-size: 0.9rem;
+            padding: 40px;
+            color: #666;
+            display: none;
         }
-        
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .acestream-note {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .warning-icon {
+            font-size: 1.5em;
+        }
+
         @media (max-width: 768px) {
-            .channels-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .filter-controls {
-                flex-direction: column;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
+            h1 { font-size: 2em; }
+            .channels-grid { grid-template-columns: 1fr; }
+            .stats { gap: 20px; }
         }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Canales Acestream</h1>
-            <p class="subtitle">Lista de canales deportivos para reproducir con Acestream</p>
+            <h1>⚽ AceStream Sports</h1>
+            <p class="subtitle">Canales de Deportes en Vivo - Lista M3U8</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalChannels">0</div>
+                    <div class="stat-label">Canales Totales</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCategories">0</div>
+                    <div class="stat-label">Categorías</div>
+                </div>
+            </div>
         </header>
-        
-        <div class="instructions">
-            <h3>¿Cómo usar esta lista?</h3>
-            <ul>
-                <li>Necesitas tener instalado <strong>Acestream</strong> en tu dispositivo.</li>
-                <li>Haz clic en el botón "Play" junto al canal que quieras ver.</li>
-                <li>Se abrirá una ventana que te permitirá abrir el enlace en Acestream o copiar el ID.</li>
-                <li>También puedes filtrar canales por grupo o buscar por nombre.</li>
-            </ul>
-        </div>
-        
-        <div class="filter-controls">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Buscar canal por nombre...">
-            </div>
-            <div class="group-filter">
-                <label for="groupFilter">Filtrar por grupo:</label>
-                <select id="groupFilter">
-                    <option value="all">Todos los grupos</option>
-                    <option value="DAZN">DAZN</option>
-                    <option value="LaLiga">LaLiga</option>
-                    <option value="Champions">Champions</option>
-                    <option value="Sky Sports">Sky Sports</option>
-                    <option value="BeIN Sports">BeIN Sports</option>
-                    <option value="BT Sport">BT Sport</option>
-                    <option value="Eleven">Eleven</option>
-                    <option value="ESPN">ESPN</option>
-                </select>
+
+        <div class="acestream-note">
+            <span class="warning-icon">⚠️</span>
+            <div>
+                <strong>Nota importante:</strong> Necesitas tener instalado <strong>Ace Stream Media</strong> o un reproductor compatible con el protocolo acestream:// para poder reproducir estos enlaces.
             </div>
         </div>
-        
-        <div id="channelsContainer" class="channels-container">
-            <!-- Los canales se cargarán aquí dinámicamente -->
+
+        <input type="text" class="search-box" id="searchBox" placeholder="🔍 Buscar canal...">
+
+        <div id="categoriesContainer"></div>
+
+        <div class="no-results" id="noResults">
+            <h3>No se encontraron canales</h3>
+            <p>Intenta con otra búsqueda</p>
         </div>
-        
-        <div id="channelCount" class="channel-count">
-            <!-- El contador de canales se actualizará aquí -->
-        </div>
-        
-        <div id="playModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="modalChannelName">Nombre del Canal</h3>
-                    <button class="close-modal" id="closeModal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p id="modalChannelInfo">Información del canal seleccionado</p>
-                    <p>ID de Acestream: <strong id="modalStreamId">xxxxxxxxxxxxxxxx</strong></p>
-                    <p>Selecciona una opción para reproducir este canal:</p>
-                </div>
-                <div class="modal-actions">
-                    <button class="modal-button secondary-button" id="copyIdButton">Copiar ID</button>
-                    <button class="modal-button primary-button" id="openStreamButton">Abrir en Acestream</button>
-                </div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>Esta página contiene enlaces de Acestream para canales deportivos. Necesitas tener instalado Acestream para poder utilizarlos.</p>
-            <p>Los canales y enlaces se proporcionan únicamente con fines informativos.</p>
+
+        <footer class="footer">
+            <p>AceStream Sports List • Generado automáticamente desde M3U8</p>
         </footer>
     </div>
 
     <script>
-        // Datos de canales M3U8 (actualizados con los nuevos canales)
+        // Datos de canales actualizados con Movistar Plus
         const channelsData = [
-            { id: "DAZN1", name: "DAZN 1", group: "DAZN", streamId: "d5b2c6b940cf3df5e8f9dc6f000f0ea23a10b151" },
-            { id: "DAZN2", name: "DAZN 2", group: "DAZN", streamId: "b0eabe0fdd02fdd165896236765a9b753a2ff516" },
-            { id: "DAZN3", name: "DAZN 3", group: "DAZN", streamId: "d1d9ec2361a6ac8edc0b2841866383768cc28df9" },
-            { id: "DAZN4", name: "DAZN 4", group: "DAZN", streamId: "7e90956539f4e1318a63f3960e4f75c7c7c5a3b8" },
-            { id: "DAZNF1", name: "DAZN F1", group: "DAZN", streamId: "b04372b9543d763bd2dbd2a1842d9723fd080076" },
-            { id: "DAZNF1HD", name: "DAZN F1 HD", group: "DAZN", streamId: "d65257bb934b73647374224fd62d836815804be2" },
-            { id: "DAZNLL1", name: "DAZN LaLiga 1", group: "DAZN", streamId: "dda5d2cace9bc4cb0918e62bc50d657d4a10496a" },
-            { id: "LALIGA1", name: "M+ LaLiga", group: "LaLiga", streamId: "31c19ffb3472c289c5bbbbc174449c8ed0d19e38" },
-            { id: "LALIGA2", name: "M+ LaLiga 2", group: "LaLiga", streamId: "b8eb9c9868d487402569bba2d97a8af113d033fe" },
-            { id: "LALIGA3", name: "M+ LaLiga 3", group: "LaLiga", streamId: "571ce113b9d600a145766443d7417eccab2e1846" },
-            { id: "LALIGA4", name: "M+ LaLiga 4", group: "LaLiga", streamId: "22178d72e0f255dedd7e56f9474fea879289a6f1" },
-            // Nuevos canales agregados
-            { id: "MOVISTAR_VAMOS", name: "M+ Vamos", group: "LaLiga", streamId: "651d6be899d1fafa107a265a9dc00ff914c1b548" },
-            { id: "MOVISTAR_PLUS", name: "Movistar Plus", group: "LaLiga", streamId: "32fdfde0defda1404537507ce5a4fd686699dec6" },
-            { id: "CHAMPIONS1", name: "Liga de Campeones", group: "Champions", streamId: "e572a5178ff72eed7d1d751a18b4b3419699f370" },
-            { id: "CHAMPIONS2", name: "Liga de Campeones 2", group: "Champions", streamId: "338b5de78b0b40a6f9ca3cc0cf9be93341b9ceea" },
-            { id: "CHAMPIONS3", name: "Liga de Campeones 3", group: "Champions", streamId: "90f7941c6bf7ca4b18084a1dca7bc15b9b179373" },
-            { id: "CHAMPIONS4", name: "Liga de Campeones 4", group: "Champions", streamId: "6fbab1d8d6bf93c4bc7552714aa3bb54ebf7b661" },
-            { id: "SKYFOOTBALL", name: "Sky Sports Football", group: "Sky Sports", streamId: "8dbe2d515e9131fa311353537736f8c94be9b26d" },
-            { id: "BEIN1", name: "BeIN Sports 1", group: "BeIN Sports", streamId: "bba1905fcd1c4975aec544047bf8e4cd23ce3fe0" },
-            { id: "BEIN1TR", name: "BeIN Sports HD 1 (TR)", group: "BeIN Sports", streamId: "118416583faa3fb4f03800173429b6b844b43a52" },
-            { id: "BEIN2", name: "BeIN Sports 2", group: "BeIN Sports", streamId: "edb507e38394d614c9ff55805c9d354ae13210bc" },
-            { id: "BEIN3", name: "BeIN Sports 3", group: "BeIN Sports", streamId: "731bd3336ec0986ff9100efe40dbaf1473a22cf8" },
-            { id: "BEIN2TR", name: "BeIN Sports HD 2 (TR)", group: "BeIN Sports", streamId: "48bee10b883f17c7186d60f1e8022dca0ba41a05" },
-            { id: "BEIN3TR", name: "BeIN Sports HD 3 (TR)", group: "BeIN Sports", streamId: "ed81c333815247536edfcdb2755147e8c4144d62" },
-            { id: "BEIN4TR", name: "BeIN Sports HD 4 (TR)", group: "BeIN Sports", streamId: "7683cd0cbacf55fa8b39c363219ffba1bc47cf9d" },
-            { id: "BTSPORT1", name: "BT Sport 1 UK", group: "BT Sport", streamId: "fc5089d8e1519872fdf951779ccbca913acc9bce" },
-            { id: "BTSPORT1B", name: "BT Sport 1 UK (alt)", group: "BT Sport", streamId: "efc60cfe5e3a349baa02bcc49f6647c21a9c3c5b" },
-            { id: "BTSPORT2", name: "BT Sport 2 UK", group: "BT Sport", streamId: "d63d8a57cf471394bfa9f619bbd68b01ae27a801" },
-            { id: "BTSPORT3", name: "BT Sport 3 UK", group: "BT Sport", streamId: "5f966c123759de46dff29c379266b7a403452033" },
-            { id: "ELEVEN1", name: "Eleven DAZN 1", group: "Eleven", streamId: "7ac2d74ef6df9d15012992d7e0e635a95f58c652" },
-            { id: "ELEVEN1B", name: "Eleven DAZN 1 (alt)", group: "Eleven", streamId: "36cad67fed5a739757a9db844a551aa845a8d51b" },
-            { id: "ELEVEN1HD", name: "Eleven DAZN 1 HD", group: "Eleven", streamId: "14407b00d454cb7dc0d70aa26e8bbc554f457f00" },
-            { id: "ELEVEN2", name: "Eleven DAZN 2", group: "Eleven", streamId: "d08013df6e437a1fdf1e0c34f573fdf6a40c7fce" },
-            { id: "ELEVEN2HD", name: "Eleven DAZN 2 HD", group: "Eleven", streamId: "54a4a28882d3cae1ca19de5d4b022ebea40351f9" },
-            { id: "ELEVEN3", name: "Eleven DAZN 3", group: "Eleven", streamId: "dae7d1251f069516cc0a9c8f15f6639d2a17df1e" },
-            { id: "ELEVEN3HD", name: "Eleven DAZN 3 HD", group: "Eleven", streamId: "b146ee4b6e16c9df58e27bd02ffd6cea840ff212" },
-            { id: "ELEVEN4", name: "Eleven DAZN 4", group: "Eleven", streamId: "0f32c0131a2d9444996410801f4e18b04384db98" },
-            { id: "ELEVEN4HD", name: "Eleven DAZN 4 HD", group: "Eleven", streamId: "458a0ddd7d193f6d2750cd14d03a47f47a808e09" },
-            { id: "ELEVEN5", name: "Eleven DAZN 5", group: "Eleven", streamId: "4dbe63b44fc4f439f5b634c0d2aa7e0cccad808a" },
-            { id: "ELEVEN6", name: "Eleven DAZN 6", group: "Eleven", streamId: "50b6d2b5fd59fefb9f4fd2176994d418f2b94a80" },
-            { id: "ESPN2US", name: "ESPN 2 US", group: "ESPN", streamId: "664eb5fe460b96941aed633959a845b185cd8394" },
-            { id: "ESPN2BE", name: "ESPN 2 BE", group: "ESPN", streamId: "3e0ba6867173f345d482d80c771f1a5dc3b37e63" },
-            { id: "ESPN4BE", name: "ESPN 4 BE", group: "ESPN", streamId: "5f9b19c57195cc28ab81e0ec8cad03b55118687a" },
-            { id: "ESPNBE", name: "ESPN BE", group: "ESPN", streamId: "79f10c6c6168e42bfc606f3f7b9e5f3ca79dedab" },
-            { id: "ESPNHDUS", name: "ESPN HD US", group: "ESPN", streamId: "4b4907de51ec11087d4bed5876f2a0c68264f442" }
+            { id: "DAZN1", name: "DAZN 1", group: "DAZN", hash: "d5b2c6b940cf3df5e8f9dc6f000f0ea23a10b151" },
+            { id: "DAZN2", name: "DAZN 2", group: "DAZN", hash: "b0eabe0fdd02fdd165896236765a9b753a2ff516" },
+            { id: "DAZN3", name: "DAZN 3", group: "DAZN", hash: "d1d9ec2361a6ac8edc0b2841866383768cc28df9" },
+            { id: "DAZN4", name: "DAZN 4", group: "DAZN", hash: "7e90956539f4e1318a63f3960e4f75c7c7c5a3b8" },
+            { id: "DAZNF1", name: "DAZN F1", group: "DAZN", hash: "b04372b9543d763bd2dbd2a1842d9723fd080076" },
+            { id: "DAZNF1HD", name: "DAZN F1 HD", group: "DAZN", hash: "d65257bb934b73647374224fd62d836815804be2" },
+            { id: "DAZNLL1", name: "DAZN LaLiga 1", group: "DAZN", hash: "dda5d2cace9bc4cb0918e62bc50d657d4a10496a" },
+            { id: "LALIGA1", name: "M+ LaLiga", group: "LaLiga", hash: "31c19ffb3472c289c5bbbbc174449c8ed0d19e38" },
+            { id: "LALIGA2", name: "M+ LaLiga 2", group: "LaLiga", hash: "b8eb9c9868d487402569bba2d97a8af113d033fe" },
+            { id: "LALIGA3", name: "M+ LaLiga 3", group: "LaLiga", hash: "571ce113b9d600a145766443d7417eccab2e1846" },
+            { id: "LALIGA4", name: "M+ LaLiga 4", group: "LaLiga", hash: "22178d72e0f255dedd7e56f9474fea879289a6f1" },
+            { id: "CHAMPIONS1", name: "Liga de Campeones", group: "Champions", hash: "e572a5178ff72eed7d1d751a18b4b3419699f370" },
+            { id: "CHAMPIONS2", name: "Liga de Campeones 2", group: "Champions", hash: "338b5de78b0b40a6f9ca3cc0cf9be93341b9ceea" },
+            { id: "CHAMPIONS3", name: "Liga de Campeones 3", group: "Champions", hash: "90f7941c6bf7ca4b18084a1dca7bc15b9b179373" },
+            { id: "CHAMPIONS4", name: "Liga de Campeones 4", group: "Champions", hash: "6fbab1d8d6bf93c4bc7552714aa3bb54ebf7b661" },
+            { id: "SKYFOOTBALL", name: "Sky Sports Football", group: "Sky Sports", hash: "8dbe2d515e9131fa311353537736f8c94be9b26d" },
+            { id: "BEIN1", name: "BeIN Sports 1", group: "BeIN Sports", hash: "bba1905fcd1c4975aec544047bf8e4cd23ce3fe0" },
+            { id: "BEIN1TR", name: "BeIN Sports HD 1 (TR)", group: "BeIN Sports", hash: "118416583faa3fb4f03800173429b6b844b43a52" },
+            { id: "BEIN2", name: "BeIN Sports 2", group: "BeIN Sports", hash: "edb507e38394d614c9ff55805c9d354ae13210bc" },
+            { id: "BEIN3", name: "BeIN Sports 3", group: "BeIN Sports", hash: "731bd3336ec0986ff9100efe40dbaf1473a22cf8" },
+            { id: "BEIN2TR", name: "BeIN Sports HD 2 (TR)", group: "BeIN Sports", hash: "48bee10b883f17c7186d60f1e8022dca0ba41a05" },
+            { id: "BEIN3TR", name: "BeIN Sports HD 3 (TR)", group: "BeIN Sports", hash: "ed81c333815247536edfcdb2755147e8c4144d62" },
+            { id: "BEIN4TR", name: "BeIN Sports HD 4 (TR)", group: "BeIN Sports", hash: "7683cd0cbacf55fa8b39c363219ffba1bc47cf9d" },
+            { id: "BTSPORT1", name: "BT Sport 1 UK", group: "BT Sport", hash: "fc5089d8e1519872fdf951779ccbca913acc9bce" },
+            { id: "BTSPORT1B", name: "BT Sport 1 UK (alt)", group: "BT Sport", hash: "efc60cfe5e3a349baa02bcc49f6647c21a9c3c5b" },
+            { id: "BTSPORT2", name: "BT Sport 2 UK", group: "BT Sport", hash: "d63d8a57cf471394bfa9f619bbd68b01ae27a801" },
+            { id: "BTSPORT3", name: "BT Sport 3 UK", group: "BT Sport", hash: "5f966c123759de46dff29c379266b7a403452033" },
+            { id: "ELEVEN1", name: "Eleven DAZN 1", group: "Eleven", hash: "7ac2d74ef6df9d15012992d7e0e635a95f58c652" },
+            { id: "ELEVEN1B", name: "Eleven DAZN 1 (alt)", group: "Eleven", hash: "36cad67fed5a739757a9db844a551aa845a8d51b" },
+            { id: "ELEVEN1HD", name: "Eleven DAZN 1 HD", group: "Eleven", hash: "14407b00d454cb7dc0d70aa26e8bbc554f457f00" },
+            { id: "ELEVEN2", name: "Eleven DAZN 2", group: "Eleven", hash: "d08013df6e437a1fdf1e0c34f573fdf6a40c7fce" },
+            { id: "ELEVEN2HD", name: "Eleven DAZN 2 HD", group: "Eleven", hash: "54a4a28882d3cae1ca19de5d4b022ebea40351f9" },
+            { id: "ELEVEN3", name: "Eleven DAZN 3", group: "Eleven", hash: "dae7d1251f069516cc0a9c8f15f6639d2a17df1e" },
+            { id: "ELEVEN3HD", name: "Eleven DAZN 3 HD", group: "Eleven", hash: "b146ee4b6e16c9df58e27bd02ffd6cea840ff212" },
+            { id: "ELEVEN4", name: "Eleven DAZN 4", group: "Eleven", hash: "0f32c0131a2d9444996410801f4e18b04384db98" },
+            { id: "ELEVEN4HD", name: "Eleven DAZN 4 HD", group: "Eleven", hash: "458a0ddd7d193f6d2750cd14d03a47f47a808e09" },
+            { id: "ELEVEN5", name: "Eleven DAZN 5", group: "Eleven", hash: "4dbe63b44fc4f439f5b634c0d2aa7e0cccad808a" },
+            { id: "ELEVEN6", name: "Eleven DAZN 6", group: "Eleven", hash: "50b6d2b5fd59fefb9f4fd2176994d418f2b94a80" },
+            { id: "ESPN2US", name: "ESPN 2 US", group: "ESPN", hash: "664eb5fe460b96941aed633959a845b185cd8394" },
+            { id: "ESPN2BE", name: "ESPN 2 BE", group: "ESPN", hash: "3e0ba6867173f345d482d80c771f1a5dc3b37e63" },
+            { id: "ESPN4BE", name: "ESPN 4 BE", group: "ESPN", hash: "5f9b19c57195cc28ab81e0ec8cad03b55118687a" },
+            { id: "ESPNBE", name: "ESPN BE", group: "ESPN", hash: "79f10c6c6168e42bfc606f3f7b9e5f3ca79dedab" },
+            { id: "ESPNHDUS", name: "ESPN HD US", group: "ESPN", hash: "4b4907de51ec11087d4bed5876f2a0c68264f442" },
+            // Nuevos canales Movistar Plus
+            { id: "MVAMOS", name: "M+ Vamos", group: "Movistar Plus", hash: "651d6be899d1fafa107a265a9dc00ff914c1b548" },
+            { id: "MOVISTARPLUS", name: "Movistar Plus", group: "Movistar Plus", hash: "8c67cdb5ba81976662c3a67984a9545d9cfb0f70" }
         ];
 
-        // Elementos del DOM
-        const channelsContainer = document.getElementById('channelsContainer');
-        const searchInput = document.getElementById('searchInput');
-        const groupFilter = document.getElementById('groupFilter');
-        const channelCount = document.getElementById('channelCount');
-        const playModal = document.getElementById('playModal');
-        const modalChannelName = document.getElementById('modalChannelName');
-        const modalChannelInfo = document.getElementById('modalChannelInfo');
-        const modalStreamId = document.getElementById('modalStreamId');
-        const closeModal = document.getElementById('closeModal');
-        const copyIdButton = document.getElementById('copyIdButton');
-        const openStreamButton = document.getElementById('openStreamButton');
+        // Banderas por categoría/país
+        const categoryFlags = {
+            "DAZN": "🇪🇸",           // España (DAZN España)
+            "LaLiga": "🇪🇸",         // España
+            "Champions": "🇪🇺",      // Europa (UEFA)
+            "Sky Sports": "🇬🇧",     // Reino Unido
+            "BeIN Sports": "🇶🇦",    // Qatar (sede BeIN)
+            "BT Sport": "🇬🇧",       // Reino Unido
+            "Eleven": "🇵🇹",         // Portugal (Eleven Sports)
+            "ESPN": "🇺🇸",           // Estados Unidos
+            "Movistar Plus": "🇪🇸"   // España
+        };
 
-        // Variables para el canal seleccionado
-        let selectedChannel = null;
+        // Nombres personalizados de categorías
+        const categoryNames = {
+            "DAZN": "DAZN España",
+            "LaLiga": "LaLiga España",
+            "Champions": "Champions League",
+            "Sky Sports": "Sky Sports UK",
+            "BeIN Sports": "BeIN Sports",
+            "BT Sport": "BT Sport UK",
+            "Eleven": "Eleven Sports",
+            "ESPN": "ESPN Networks",
+            "Movistar Plus": "Movistar Plus+ España"
+        };
 
         // Agrupar canales por categoría
         function groupChannelsByCategory(channels) {
-            const groups = {};
-            
+            const grouped = {};
             channels.forEach(channel => {
-                if (!groups[channel.group]) {
-                    groups[channel.group] = [];
+                if (!grouped[channel.group]) {
+                    grouped[channel.group] = [];
                 }
-                groups[channel.group].push(channel);
+                grouped[channel.group].push(channel);
             });
-            
-            return groups;
+            return grouped;
         }
 
-        // Renderizar canales
-        function renderChannels(channels) {
-            // Limpiar contenedor
-            channelsContainer.innerHTML = '';
-            
-            // Agrupar canales por categoría
-            const groupedChannels = groupChannelsByCategory(channels);
-            
-            // Ordenar grupos alfabéticamente
-            const sortedGroups = Object.keys(groupedChannels).sort();
-            
-            // Renderizar cada grupo
-            sortedGroups.forEach(groupName => {
-                const groupElement = document.createElement('div');
-                groupElement.className = 'channel-group';
-                
-                const groupHeader = document.createElement('div');
-                groupHeader.className = 'group-header';
-                groupHeader.textContent = groupName;
-                
-                const channelList = document.createElement('div');
-                channelList.className = 'channel-list';
-                
-                // Ordenar canales por nombre
-                groupedChannels[groupName].sort((a, b) => a.name.localeCompare(b.name));
-                
-                // Agregar cada canal del grupo
-                groupedChannels[groupName].forEach(channel => {
-                    const channelItem = document.createElement('div');
-                    channelItem.className = 'channel-item';
-                    
-                    const channelInfo = document.createElement('div');
-                    channelInfo.className = 'channel-info';
-                    
-                    const channelName = document.createElement('div');
-                    channelName.className = 'channel-name';
-                    channelName.textContent = channel.name;
-                    
-                    const channelId = document.createElement('div');
-                    channelId.className = 'channel-id';
-                    channelId.textContent = `ID: ${channel.id}`;
-                    
-                    channelInfo.appendChild(channelName);
-                    channelInfo.appendChild(channelId);
-                    
-                    const playButton = document.createElement('button');
-                    playButton.className = 'play-button';
-                    playButton.textContent = 'Play';
-                    playButton.addEventListener('click', () => openPlayModal(channel));
-                    
-                    channelItem.appendChild(channelInfo);
-                    channelItem.appendChild(playButton);
-                    channelList.appendChild(channelItem);
-                });
-                
-                groupElement.appendChild(groupHeader);
-                groupElement.appendChild(channelList);
-                channelsContainer.appendChild(groupElement);
-            });
-            
-            // Actualizar contador de canales
-            const totalChannels = channels.length;
-            const totalGroups = Object.keys(groupedChannels).length;
-            channelCount.textContent = `Mostrando ${totalChannels} canales en ${totalGroups} grupos`;
+        // Crear HTML para un canal
+        function createChannelCard(channel) {
+            const acestreamUrl = `acestream://${channel.hash}`;
+            return `
+                <div class="channel-card" data-name="${channel.name.toLowerCase()}" data-group="${channel.group.toLowerCase()}">
+                    <div class="channel-info">
+                        <div class="channel-name">
+                            <span class="live-indicator"></span>
+                            ${channel.name}
+                        </div>
+                        <div class="channel-id">ID: ${channel.id}</div>
+                    </div>
+                    <a href="${acestreamUrl}" class="play-button" title="Reproducir en AceStream">
+                        <div class="play-icon"></div>
+                    </a>
+                </div>
+            `;
         }
 
-        // Filtrar canales
-        function filterChannels() {
-            const searchTerm = searchInput.value.toLowerCase();
-            const selectedGroup = groupFilter.value;
+        // Renderizar la lista
+        function renderChannels(filter = "") {
+            const container = document.getElementById('categoriesContainer');
+            const noResults = document.getElementById('noResults');
+            container.innerHTML = '';
             
-            const filteredChannels = channelsData.filter(channel => {
-                const matchesSearch = channel.name.toLowerCase().includes(searchTerm) || 
-                                      channel.id.toLowerCase().includes(searchTerm);
-                const matchesGroup = selectedGroup === 'all' || channel.group === selectedGroup;
-                
-                return matchesSearch && matchesGroup;
-            });
-            
-            renderChannels(filteredChannels);
-        }
+            const filteredChannels = channelsData.filter(ch => 
+                ch.name.toLowerCase().includes(filter.toLowerCase()) ||
+                ch.group.toLowerCase().includes(filter.toLowerCase()) ||
+                ch.id.toLowerCase().includes(filter.toLowerCase())
+            );
 
-        // Abrir modal para reproducir canal
-        function openPlayModal(channel) {
-            selectedChannel = channel;
-            
-            modalChannelName.textContent = channel.name;
-            modalChannelInfo.textContent = `${channel.name} (${channel.group})`;
-            modalStreamId.textContent = channel.streamId;
-            
-            playModal.style.display = 'flex';
-        }
-
-        // Cerrar modal
-        function closePlayModal() {
-            playModal.style.display = 'none';
-            selectedChannel = null;
-        }
-
-        // Copiar ID al portapapeles
-        function copyStreamId() {
-            if (selectedChannel) {
-                navigator.clipboard.writeText(selectedChannel.streamId)
-                    .then(() => {
-                        copyIdButton.textContent = '¡Copiado!';
-                        setTimeout(() => {
-                            copyIdButton.textContent = 'Copiar ID';
-                        }, 2000);
-                    })
-                    .catch(err => {
-                        console.error('Error al copiar: ', err);
-                        alert('No se pudo copiar el ID. Puedes copiarlo manualmente: ' + selectedChannel.streamId);
-                    });
+            if (filteredChannels.length === 0) {
+                noResults.style.display = 'block';
+                return;
+            } else {
+                noResults.style.display = 'none';
             }
-        }
 
-        // Abrir enlace Acestream
-        function openAcestream() {
-            if (selectedChannel) {
-                const acestreamUrl = `acestream://${selectedChannel.streamId}`;
-                
-                // Intentar abrir el enlace acestream
-                window.location.href = acestreamUrl;
-                
-                // Si no se abre (por falta de aplicación), mostrar mensaje
-                setTimeout(() => {
-                    alert('Si Acestream no se abre automáticamente, copia este ID y pégalo manualmente en Acestream: ' + selectedChannel.streamId);
-                }, 500);
-            }
-        }
-
-        // Inicializar eventos
-        function initEvents() {
-            searchInput.addEventListener('input', filterChannels);
-            groupFilter.addEventListener('change', filterChannels);
-            closeModal.addEventListener('click', closePlayModal);
-            copyIdButton.addEventListener('click', copyStreamId);
-            openStreamButton.addEventListener('click', openAcestream);
+            const grouped = groupChannelsByCategory(filteredChannels);
             
-            // Cerrar modal al hacer clic fuera del contenido
-            playModal.addEventListener('click', (e) => {
-                if (e.target === playModal) {
-                    closePlayModal();
-                }
+            // Ordenar categorías: Movistar Plus y LaLiga primero, luego el resto alfabéticamente
+            const sortedCategories = Object.keys(grouped).sort((a, b) => {
+                const priority = ["Movistar Plus", "LaLiga", "DAZN", "Champions"];
+                const aIndex = priority.indexOf(a);
+                const bIndex = priority.indexOf(b);
+                
+                if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+                if (aIndex !== -1) return -1;
+                if (bIndex !== -1) return 1;
+                return a.localeCompare(b);
             });
             
-            // Cerrar modal con tecla ESC
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closePlayModal();
-                }
+            sortedCategories.forEach(category => {
+                const channels = grouped[category];
+                const section = document.createElement('div');
+                section.className = 'category-section';
+                
+                const flag = categoryFlags[category] || "📺";
+                const displayName = categoryNames[category] || category;
+                
+                section.innerHTML = `
+                    <div class="category-header">
+                        <div class="category-title">
+                            <span class="category-flag">${flag}</span>
+                            ${displayName}
+                        </div>
+                        <span class="channel-count">${channels.length} canales</span>
+                    </div>
+                    <div class="channels-grid">
+                        ${channels.map(createChannelCard).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(section);
             });
+
+            // Actualizar estadísticas
+            document.getElementById('totalChannels').textContent = channelsData.length;
+            document.getElementById('totalCategories').textContent = Object.keys(groupChannelsByCategory(channelsData)).length;
         }
 
-        // Inicializar aplicación
-        function initApp() {
-            renderChannels(channelsData);
-            initEvents();
-        }
+        // Búsqueda en tiempo real
+        document.getElementById('searchBox').addEventListener('input', (e) => {
+            renderChannels(e.target.value);
+        });
 
-        // Ejecutar cuando el DOM esté cargado
-        document.addEventListener('DOMContentLoaded', initApp);
+        // Render inicial
+        renderChannels();
     </script>
 </body>
 </html>
